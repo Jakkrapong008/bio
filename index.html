@@ -448,12 +448,10 @@
 
     <script>
         // Global variables for Google Apps Script URL, teacher password, folder ID, and spreadsheet ID
-        // *** IMPORTANT: Replace "YOUR_NEW_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE" with your actual deployed Apps Script URL ***
-        // SCRIPT_URL ควรเป็น URL ที่ได้จากการ Deploy Google Apps Script ของคุณ
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyOeidQ09fAobT1QylfMY43jU7XjI5eW4y3YkTjqZZRne8wXPGOt3vO2AC3SPIa7yMX/exec"; 
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx50XYgYkx-DiBj4aBOL8HVYlTklRm4LBh6M47eh4sjwSb_TdR_CRYSuJSvDUv9o3mjwQ/exec";
         const TEACHER_PASSWORD = "123321";
-        const FOLDER_ID = "1Bvn4_aKa1stGQoPpVmTW144CWEE0Ha-b"; // รหัส Google Drive Folder ที่คุณต้องการใช้
-        const SPREADSHEET_ID = "1PPCrXJCKT75dOPN6N6XbwaY-sWZ0aEz3V0w1Y2f79rA"; // รหัส Google Sheet ของคุณ
+        const FOLDER_ID = "1Bvn4_aKa1stGQoPpVmTW144CWEE0Ha-b";
+        const SPREADSHEET_ID = "12dhsmU3dsTI5akJljcdReboJXpdh16VVXVm65yyn4gY";
         
         let currentFileId = null; // Stores the ID of the file currently being acted upon (e.g., for deletion)
         let currentSubject = "วิชาวิทยาศาสตร์ชีวภาพ ม.4"; // Tracks the currently selected subject tab
