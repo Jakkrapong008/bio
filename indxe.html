@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สื่อการสอนวิชา ชีวภาพและชีววิทยา</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Global font setting */
+        * {
+            font-family: 'Sarabun', sans-serif;
+        }
+        
+        /* Body background with gradient */
+        body {
+            background: linear-gradient(135deg, #c2e59c, #64b3f4);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Modal animations */
+        .modal {
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .modal-content {
+            animation: scaleUp 0.4s ease-out;
+        }
+        
+        /* Tab content animation */
+        .tab-content {
+            animation: slideIn 0.4s ease-out;
+        }
+        
+        /* Success message pulse animation */
+        .success-message {
+            animation: pulse 1.5s infinite;
+        }
+        
+        /* File row hover effects */
+        .file-row {
+            transition: all 0.3s ease;
+        }
+        
+        .file-row:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Primary button styling */
+        .btn-primary {
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(17, 153, 142, 0.5);
+        }
+        
+        /* Secondary button styling */
+        .btn-secondary {
+            background: linear-gradient(135deg, #4776E6, #8E54E9);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(71, 118, 230, 0.5);
+        }
+        
+        /* Danger button styling */
+        .btn-danger {
+            background: linear-gradient(135deg, #FF416C, #FF4B2B);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(255, 65, 108, 0.5);
+        }
+        
+        /* Keyframe animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes scaleUp {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Active tab styling */
+        .tab-active {
+            border-bottom: 3px solid #38ef7d;
+            color: #11998e;
+            font-weight: 600;
+        }
+        
+        /* Loader spinner animation */
+        .loader {
+            border-top-color: #38ef7d;
+            animation: spinner 0.8s linear infinite;
+        }
+        
+        @keyframes spinner {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Toggle Switch styling */
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #38ef7d;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #38ef7d;
+        }
+
+        /* Custom styling for student subject buttons */
+        .student-subject-btn {
+            background: linear-gradient(135deg, #a1c4fd, #c2e59c); /* Light blue to light green gradient */
+            color: #333; /* Darker text for contrast */
+            font-weight: 700; /* Extra bold */
+            padding: 1.5rem 2rem; /* Larger padding */
+            border-radius: 1.5rem; /* More rounded corners */
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Stronger shadow */
+            transition: all 0.3s ease;
+            text-align: center;
+            display: flex; /* Use flexbox for icon and text alignment */
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem; /* Space between icon and text */
+            font-size: 1.25rem; /* Larger font size */
+            flex-grow: 1; /* Allow buttons to grow and fill space */
+            margin: 0.5rem; /* Add some margin between buttons */
+        }
+
+        .student-subject-btn:hover {
+            transform: translateY(-5px) scale(1.02); /* Lift and slightly enlarge on hover */
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3); /* Even stronger shadow on hover */
+            background: linear-gradient(135deg, #c2e59c, #a1c4fd); /* Invert gradient on hover */
+        }
+
+        /* Responsive adjustments for student buttons */
+        @media (max-width: 768px) {
+            .student-subject-btn {
+                padding: 1rem 1.5rem;
+                font-size: 1rem;
+                flex-direction: column; /* Stack icon and text on smaller screens */
+                gap: 0.25rem;
+            }
+        }
+    </style>
+</head>
+<body class="relative">
+    <div id="app" class="container mx-auto px-4 py-8 max-w-6xl">
+        <h1 class="text-4xl font-bold text-center text-white mb-8 hidden" id="mainTitle">
+            สื่อการสอนวิชา ชีวภาพและชีววิทยา 🧬 🔬 🌱
+        </h1>
+        
+        <div id="initialModal" class="modal fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+            <div class="modal-content bg-white rounded-lg shadow-xl p-8 max-w-md w-full">
+                <h2 class="text-3xl font-bold text-center mb-6">สถานะ ? 🧑‍🏫 / 🧑‍🎓</h2>
+                <p class="text-gray-600 text-center mb-8">กรุณาเลือกสถานะของคุณเพื่อเข้าสู่ระบบ</p>
+                <div class="flex justify-center space-x-4">
+                    <button id="teacherBtn" class="btn-primary text-white font-bold py-3 px-6 rounded-lg text-lg">
+                        คุณครู 🧑‍🏫
+                    </button>
+                    <button id="studentBtn" class="btn-secondary text-white font-bold py-3 px-6 rounded-lg text-lg">
+                        นักเรียน 🧑‍🎓
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div id="teacherAuthModal" class="modal fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 hidden">
+            <div class="modal-content bg-white rounded-lg shadow-xl p-8 max-w-md w-full">
+                <h2 class="text-3xl font-bold text-center mb-6">ยืนยันตัวตนคุณครู 🔑</h2>
+                <p class="text-gray-600 text-center mb-6">กรุณากรอกรหัสผ่านสำหรับคุณครู</p>
+                <div class="mb-6">
+                    <input type="password" id="teacherPassword" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" placeholder="รหัสผ่าน">
+                </div>
+                <div id="passwordError" class="text-red-500 text-center mb-4 hidden">
+                    รหัสผ่านไม่ถูกต้อง ❌ กรุณาลองอีกครั้ง
+                </div>
+                <div class="flex justify-center">
+                    <button id="teacherLoginBtn" class="btn-primary text-white font-bold py-3 px-6 rounded-lg text-lg w-full">
+                        เข้าสู่ระบบ
+                    </button>
+                </div>
+                <div class="mt-4 text-center">
+                    <button id="backToInitialBtn" class="text-blue-500 hover:underline">
+                        ย้อนกลับ
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div id="teacherDashboard" class="hidden">
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+                <h2 class="text-2xl font-bold mb-6 text-gray-800">อัปโหลดสื่อการสอน 📚</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">วิชา</label>
+                        <select id="subjectSelect" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                            <option value="วิชาวิทยาศาสตร์ชีวภาพ ม.4">วิชาวิทยาศาสตร์ชีวภาพ ม.4 🔬</option>
+                            <option value="วิชาชีววิทยา ม.5">วิชาชีววิทยา ม.5 🌱</option>
+                            <option value="วิชาชีววิทยา ม.6">วิชาชีววิทยา ม.6 🧬</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">ชื่อไฟล์</label>
+                        <input type="text" id="fileName" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" placeholder="ป้อนชื่อไฟล์ เช่น บทที่ 1 เซลล์ของสิ่งมีชีวิต">
+                    </div>
+                    <div class="hidden">
+                        <label class="block text-gray-700 font-medium mb-2">Google Drive Folder ID</label>
+                        <input type="text" id="folderId" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" value="1Bvn4_aKa1stGQoPpVmTW144CWEE0Ha-b" readonly>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">อัปโหลดไฟล์ 📁</label>
+                        <input type="file" id="fileUpload" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                    </div>
+                </div>
+                <div class="mt-6">
+                    <button id="uploadBtn" class="btn-primary text-white font-bold py-3 px-6 rounded-lg text-lg w-full flex items-center justify-center">
+                        <span>อัปโหลดไฟล์ ✨</span>
+                        <span id="uploadSpinner" class="ml-2 loader h-5 w-5 border-2 border-white border-t-2 rounded-full hidden"></span>
+                    </button>
+                </div>
+                <div id="uploadSuccess" class="mt-4 p-3 bg-green-100 text-green-700 rounded-lg text-center success-message hidden">
+                    อัปโหลดไฟล์สำเร็จ! ✅
+                </div>
+                <div id="uploadError" class="mt-4 p-3 bg-red-100 text-red-700 rounded-lg text-center hidden">
+                    เกิดข้อผิดพลาด ❌ <span id="errorDetails"></span>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-2xl font-bold mb-6 text-gray-800">จัดการสื่อการสอน 📋</h2>
+                
+                <div class="mb-6">
+                    <div class="flex border-b border-gray-200">
+                        <button class="teacher-tab-btn tab-active py-2 px-4 mr-2" data-subject="วิชาวิทยาศาสตร์ชีวภาพ ม.4">
+                            วิชาวิทยาศาสตร์ชีวภาพ ม.4 🔬
+                        </button>
+                        <button class="teacher-tab-btn py-2 px-4 mr-2" data-subject="วิชาชีววิทยา ม.5">
+                            วิชาชีววิทยา ม.5 🌱
+                        </button>
+                        <button class="teacher-tab-btn py-2 px-4" data-subject="วิชาชีววิทยา ม.6">
+                            วิชาชีววิทยา ม.6 🧬
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="teacherTabContent">
+                    <div id="teacherTab1" class="teacher-tab-content">
+                        <h3 class="text-xl font-bold mb-4">รายการสื่อการสอน: วิชาวิทยาศาสตร์ชีวภาพ ม.4 🔬</h3>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full bg-white">
+                                <thead>
+                                    <tr class="bg-gray-100">
+                                        <th class="py-3 px-4 text-left">ลำดับ</th>
+                                        <th class="py-3 px-4 text-left">ชื่อไฟล์</th>
+                                        <th class="py-3 px-4 text-left">วันเวลาที่อัปโหลด</th>
+                                        <th class="py-3 px-4 text-left">การจัดการ</th>
+                                        <th class="py-3 px-4 text-center">แสดงให้นักเรียน</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="fileTable1" class="text-gray-700">
+                                    <tr>
+                                        <td colspan="5" class="py-4 px-4 text-center">กำลังโหลดข้อมูล...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div id="teacherTab2" class="teacher-tab-content hidden">
+                        <h3 class="text-xl font-bold mb-4">รายการสื่อการสอน: วิชาชีววิทยา ม.5 🌱</h3>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full bg-white">
+                                <thead>
+                                    <tr class="bg-gray-100">
+                                        <th class="py-3 px-4 text-left">ลำดับ</th>
+                                        <th class="py-3 px-4 text-left">ชื่อไฟล์</th>
+                                        <th class="py-3 px-4 text-left">วันเวลาที่อัปโหลด</th>
+                                        <th class="py-3 px-4 text-left">การจัดการ</th>
+                                        <th class="py-3 px-4 text-center">แสดงให้นักเรียน</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="fileTable2" class="text-gray-700">
+                                    <tr>
+                                        <td colspan="5" class="py-4 px-4 text-center">กำลังโหลดข้อมูล...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div id="teacherTab3" class="teacher-tab-content hidden">
+                        <h3 class="text-xl font-bold mb-4">รายการสื่อการสอน: วิชาชีววิทยา ม.6 🧬</h3>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full bg-white">
+                                <thead>
+                                    <tr class="bg-gray-100">
+                                        <th class="py-3 px-4 text-left">ลำดับ</th>
+                                        <th class="py-3 px-4 text-left">ชื่อไฟล์</th>
+                                        <th class="py-3 px-4 text-left">วันเวลาที่อัปโหลด</th>
+                                        <th class="py-3 px-4 text-left">การจัดการ</th>
+                                        <th class="py-3 px-4 text-center">แสดงให้นักเรียน</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="fileTable3" class="text-gray-700">
+                                    <tr>
+                                        <td colspan="5" class="py-4 px-4 text-center">กำลังโหลดข้อมูล...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-6 text-center">
+                <button id="teacherLogoutBtn" class="text-white bg-gray-600 hover:bg-gray-700 font-bold py-2 px-6 rounded-lg">
+                    ออกจากระบบ
+                </button>
+            </div>
+        </div>
+        
+        <div id="studentDashboard" class="hidden">
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-2xl font-bold mb-2 text-gray-800">สื่อการเรียนรู้ 📚</h2>
+                <p class="text-gray-600 text-center mb-6">โดย ครูจักรพงศ์ จันทวงศ์</p>
+                
+                <div class="mb-6 flex flex-wrap justify-center">
+                    <button class="student-subject-btn" data-subject="วิชาวิทยาศาสตร์ชีวภาพ ม.4">
+                        วิชาวิทยาศาสตร์ชีวภาพ ม.4 🔬
+                    </button>
+                    <button class="student-subject-btn" data-subject="วิชาชีววิทยา ม.5">
+                        วิชาชีววิทยา ม.5 🌱
+                    </button>
+                    <button class="student-subject-btn" data-subject="วิชาชีววิทยา ม.6">
+                        วิชาชีววิทยา ม.6 🧬
+                    </button>
+                </div>
+                
+                <div id="studentTabContent">
+                    <div id="studentTab1" class="student-tab-content">
+                        <h3 class="text-xl font-bold mb-4">สื่อการเรียนรู้: วิชาวิทยาศาสตร์ชีวภาพ ม.4 🔬</h3>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full bg-white">
+                                <thead>
+                                    <tr class="bg-gray-100">
+                                        <th class="py-3 px-4 text-left">ลำดับ</th>
+                                        <th class="py-3 px-4 text-left">ชื่อไฟล์</th>
+                                        <th class="py-3 px-4 text-left">ดาวน์โหลด</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="studentFileTable1" class="text-gray-700">
+                                    <tr>
+                                        <td colspan="3" class="py-4 px-4 text-center">กำลังโหลดข้อมูล...</td> </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div id="studentTab2" class="student-tab-content hidden">
+                        <h3 class="text-xl font-bold mb-4">สื่อการเรียนรู้: วิชาชีววิทยา ม.5 🌱</h3>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full bg-white">
+                                <thead>
+                                    <tr class="bg-gray-100">
+                                        <th class="py-3 px-4 text-left">ลำดับ</th>
+                                        <th class="py-3 px-4 text-left">ชื่อไฟล์</th>
+                                        <th class="py-3 px-4 text-left">ดาวน์โหลด</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="studentFileTable2" class="text-gray-700">
+                                    <tr>
+                                        <td colspan="3" class="py-4 px-4 text-center">กำลังโหลดข้อมูล...</td> </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div id="studentTab3" class="student-tab-content hidden">
+                        <h3 class="text-xl font-bold mb-4">สื่อการเรียนรู้: วิชาชีววิทยา ม.6 🧬</h3>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full bg-white">
+                                <thead>
+                                    <tr class="bg-gray-100">
+                                        <th class="py-3 px-4 text-left">ลำดับ</th>
+                                        <th class="py-3 px-4 text-left">ชื่อไฟล์</th>
+                                        <th class="py-3 px-4 text-left">ดาวน์โหลด</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="studentFileTable3" class="text-gray-700">
+                                    <tr>
+                                        <td colspan="3" class="py-4 px-4 text-center">กำลังโหลดข้อมูล...</td> </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-6 text-center">
+                <button id="studentLogoutBtn" class="text-white bg-gray-600 hover:bg-gray-700 font-bold py-2 px-6 rounded-lg">
+                    ออกจากระบบ
+                </button>
+            </div>
+        </div>
+        
+        <div id="deleteModal" class="modal fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 hidden">
+            <div class="modal-content bg-white rounded-lg shadow-xl p-8 max-w-md w-full">
+                <h2 class="text-2xl font-bold text-center mb-6">ยืนยันการลบ</h2>
+                <p class="text-gray-600 text-center mb-6">คุณต้องการลบไฟล์นี้ใช่หรือไม่?</p>
+                <p id="deleteFileName" class="text-center font-bold mb-6"></p>
+                <div class="flex justify-center space-x-4">
+                    <button id="cancelDeleteBtn" class="bg-gray-500 text-white font-bold py-2 px-6 rounded-lg">
+                        ยกเลิก
+                    </button>
+                    <button id="confirmDeleteBtn" class="btn-danger text-white font-bold py-2 px-6 rounded-lg">
+                        ลบ
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer id="appFooter" class="w-full bg-gray-800 text-white text-center py-4 mt-8 rounded-t-lg shadow-lg hidden">
+        <p class="text-sm">จัดทำโดย ครูจักรพงศ์ จันทวงศ์ โรงเรียนหางดงรัฐราษฎร์อุปถัมภ์</p>
+    </footer>
+
+    <script>
+        // Global variables for Google Apps Script URL, teacher password, folder ID, and spreadsheet ID
+        // *** IMPORTANT: Replace "YOUR_NEW_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE" with your actual deployed Apps Script URL ***
+        // SCRIPT_URL ควรเป็น URL ที่ได้จากการ Deploy Google Apps Script ของคุณ
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyOeidQ09fAobT1QylfMY43jU7XjI5eW4y3YkTjqZZRne8wXPGOt3vO2AC3SPIa7yMX/exec"; 
+        const TEACHER_PASSWORD = "123321";
+        const FOLDER_ID = "1Bvn4_aKa1stGQoPpVmTW144CWEE0Ha-b"; // รหัส Google Drive Folder ที่คุณต้องการใช้
+        const SPREADSHEET_ID = "1PPCrXJCKT75dOPN6N6XbwaY-sWZ0aEz3V0w1Y2f79rA"; // รหัส Google Sheet ของคุณ
+        
+        let currentFileId = null; // Stores the ID of the file currently being acted upon (e.g., for deletion)
+        let currentSubject = "วิชาวิทยาศาสตร์ชีวภาพ ม.4"; // Tracks the currently selected subject tab
+        // Object to hold file data, categorized by subject
+        let fileData = {
+            "วิชาวิทยาศาสตร์ชีวภาพ ม.4": [],
+            "วิชาชีววิทยา ม.5": [],
+            "วิชาชีววิทยา ม.6": []
+        };
+        
+        // Get references to key DOM elements
+        const initialModal = document.getElementById('initialModal');
+        const teacherAuthModal = document.getElementById('teacherAuthModal');
+        const teacherDashboard = document.getElementById('teacherDashboard');
+        const studentDashboard = document.getElementById('studentDashboard');
+        const mainTitle = document.getElementById('mainTitle');
+        const deleteModal = document.getElementById('deleteModal');
+        const appFooter = document.getElementById('appFooter'); // Get reference to the footer
+
+        // Function to show the footer
+        function showFooter() {
+            appFooter.classList.remove('hidden');
+        }
+
+        // Function to hide the footer
+        function hideFooter() {
+            appFooter.classList.add('hidden');
+        }
+        
+        // Event listener for the "Teacher" button in the initial modal
+        document.getElementById('teacherBtn').addEventListener('click', () => {
+            initialModal.classList.add('hidden'); // Hide the initial modal
+            teacherAuthModal.classList.remove('hidden'); // Show the teacher authentication modal
+            hideFooter(); // Ensure footer is hidden on auth modal
+        });
+        
+        // Event listener for the "Student" button in the initial modal
+        document.getElementById('studentBtn').addEventListener('click', () => {
+            initialModal.classList.add('hidden'); // Hide the initial modal
+            mainTitle.classList.remove('hidden'); // Show the main title
+            studentDashboard.classList.remove('hidden'); // Show the student dashboard
+            loadStudentFiles(); // Load files relevant to students
+            showFooter(); // Show footer when student dashboard is active
+        });
+        
+        // Event listener for the teacher login button
+        document.getElementById('teacherLoginBtn').addEventListener('click', () => {
+            const password = document.getElementById('teacherPassword').value; // Get entered password
+            const passwordError = document.getElementById('passwordError'); // Get error message element
+            
+            if (password === TEACHER_PASSWORD) {
+                teacherAuthModal.classList.add('hidden'); // Hide auth modal
+                mainTitle.classList.remove('hidden'); // Show main title
+                teacherDashboard.classList.remove('hidden'); // Show teacher dashboard
+                passwordError.classList.add('hidden'); // Hide any previous error messages
+                loadTeacherFiles(); // Load files for teacher management
+                showFooter(); // Show footer when teacher dashboard is active
+            } else {
+                passwordError.classList.remove('hidden'); // Show password error
+                document.getElementById('teacherPassword').value = ''; // Clear password field
+            }
+        });
+        
+        // Event listener to go back from teacher auth to initial modal
+        document.getElementById('backToInitialBtn').addEventListener('click', () => {
+            teacherAuthModal.classList.add('hidden'); // Hide auth modal
+            initialModal.classList.remove('hidden'); // Show initial modal
+            document.getElementById('passwordError').classList.add('hidden'); // Hide error
+            document.getElementById('teacherPassword').value = ''; // Clear password
+            hideFooter(); // Hide footer when returning to initial modal
+        });
+        
+        // Event listener for teacher logout button
+        document.getElementById('teacherLogoutBtn').addEventListener('click', () => {
+            teacherDashboard.classList.add('hidden'); // Hide teacher dashboard
+            mainTitle.classList.add('hidden'); // Hide main title
+            initialModal.classList.remove('hidden'); // Show initial modal
+            hideFooter(); // Hide footer on logout
+        });
+        
+        // Event listener for student logout button
+        document.getElementById('studentLogoutBtn').addEventListener('click', () => {
+            studentDashboard.classList.add('hidden'); // Hide student dashboard
+            mainTitle.classList.add('hidden'); // Hide main title
+            initialModal.classList.remove('hidden'); // Show initial modal
+            hideFooter(); // Hide footer on logout
+        });
+        
+        // Teacher Tab Switching logic
+        const teacherTabBtns = document.querySelectorAll('.teacher-tab-btn');
+        const teacherTabContents = document.querySelectorAll('.teacher-tab-content');
+        
+        teacherTabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const subject = btn.getAttribute('data-subject'); // Get subject from data attribute
+                currentSubject = subject; // Update current subject
+                
+                // Remove 'tab-active' class from all buttons and add to the clicked one
+                teacherTabBtns.forEach(b => b.classList.remove('tab-active'));
+                btn.classList.add('tab-active');
+                
+                // Hide all tab contents and show the one corresponding to the clicked subject
+                teacherTabContents.forEach(content => content.classList.add('hidden'));
+                
+                if (subject === "วิชาวิทยาศาสตร์ชีวภาพ ม.4") {
+                    document.getElementById('teacherTab1').classList.remove('hidden');
+                } else if (subject === "วิชาชีววิทยา ม.5") {
+                    document.getElementById('teacherTab2').classList.remove('hidden');
+                } else {
+                    document.getElementById('teacherTab3').classList.remove('hidden');
+                }
+            });
+        });
+        
+        // Student Tab Switching logic (now using the new subject buttons)
+        const studentSubjectBtns = document.querySelectorAll('.student-subject-btn'); // Select the new subject buttons
+        const studentTabContents = document.querySelectorAll('.student-tab-content');
+        
+        studentSubjectBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const subject = btn.getAttribute('data-subject'); // Get subject from data attribute
+                
+                // No 'tab-active' class for these buttons as they are distinct
+                // studentSubjectBtns.forEach(b => b.classList.remove('tab-active'));
+                // btn.classList.add('tab-active');
+                
+                // Hide all tab contents and show the one corresponding to the clicked subject
+                studentTabContents.forEach(content => content.classList.add('hidden'));
+                
+                if (subject === "วิชาวิทยาศาสตร์ชีวภาพ ม.4") {
+                    document.getElementById('studentTab1').classList.remove('hidden');
+                } else if (subject === "วิชาชีววิทยา ม.5") {
+                    document.getElementById('studentTab2').classList.remove('hidden');
+                } else {
+                    document.getElementById('studentTab3').classList.remove('hidden');
+                }
+            });
+        });
+
+        // Initialize the first student tab as active on load
+        document.addEventListener('DOMContentLoaded', () => {
+            if (studentSubjectBtns.length > 0) {
+                // Simulate a click on the first student subject button to show its content
+                studentSubjectBtns[0].click();
+            }
+            hideFooter(); // Ensure footer is hidden on initial load
+        });
+        
+        // File Upload logic
+        document.getElementById('uploadBtn').addEventListener('click', async () => {
+            const subject = document.getElementById('subjectSelect').value; // Get selected subject
+            const fileName = document.getElementById('fileName').value; // Get entered file name
+            const fileInput = document.getElementById('fileUpload'); // Get file input element
+            const uploadSpinner = document.getElementById('uploadSpinner'); // Get loading spinner
+            const uploadSuccess = document.getElementById('uploadSuccess'); // Get success message
+            const uploadError = document.getElementById('uploadError'); // Get error message container
+            const errorDetails = document.getElementById('errorDetails'); // Get error details span
+            
+            // Input validation
+            if (!fileName) {
+                errorDetails.textContent = "กรุณากรอกชื่อไฟล์";
+                uploadError.classList.remove('hidden');
+                uploadSuccess.classList.add('hidden');
+                return;
+            }
+            
+            if (!fileInput.files || fileInput.files.length === 0) {
+                errorDetails.textContent = "กรุณาเลือกไฟล์";
+                uploadError.classList.remove('hidden');
+                uploadSuccess.classList.add('hidden');
+                return;
+            }
+            
+            // Show loading spinner and hide previous messages
+            uploadSpinner.classList.remove('hidden');
+            uploadSuccess.classList.add('hidden');
+            uploadError.classList.add('hidden');
+            
+            try {
+                // Read the selected file as a base64 encoded string
+                const file = fileInput.files[0];
+                const reader = new FileReader();
+                
+                reader.onload = async function(e) {
+                    const base64Data = e.target.result.split(',')[1]; // Extract base64 data from the data URL
+                    
+                    // Prepare data payload for Google Apps Script
+                    const data = {
+                        action: 'uploadFile',
+                        fileName: fileName,
+                        subject: subject,
+                        base64Data: base64Data,
+                        mimeType: file.type,
+                        folderId: FOLDER_ID // Use the predefined folder ID
+                    };
+                    
+                    try {
+                        // Send the data to Google Apps Script via a POST request
+                        const response = await fetch(SCRIPT_URL, {
+                            method: 'POST',
+                            body: JSON.stringify(data) // Convert data to JSON string
+                        });
+                        
+                        const result = await response.json(); // Parse the JSON response
+                        
+                        if (result.success) {
+                            // If upload is successful, add the new file to our local data structure
+                            const newFile = {
+                                id: result.id,
+                                fileName: fileName,
+                                subject: subject,
+                                uploadDate: result.uploadDate,
+                                fileId: result.fileId,
+                                downloadUrl: result.downloadUrl,
+                                order: result.order,
+                                visible: true
+                            };
+                            
+                            fileData[subject].push(newFile); // Add to the correct subject array
+                            
+                            // Hide spinner, show success message
+                            uploadSpinner.classList.add('hidden');
+                            uploadSuccess.classList.remove('hidden');
+                            
+                            // Refresh both teacher and student file tables to reflect changes
+                            updateFileTables();
+                            
+                            // Clear the form fields
+                            document.getElementById('fileName').value = '';
+                            document.getElementById('fileUpload').value = '';
+                        } else {
+                            // If upload fails, throw an error with details
+                            throw new Error(result.error || 'เกิดข้อผิดพลาดในการอัปโหลด');
+                        }
+                    } catch (error) {
+                        // Catch and display errors during the fetch operation
+                        uploadSpinner.classList.add('hidden');
+                        errorDetails.textContent = error.message;
+                        uploadError.classList.remove('hidden');
+                    }
+                };
+                
+                reader.onerror = function() {
+                    // Handle errors during file reading
+                    uploadSpinner.classList.add('hidden');
+                    errorDetails.textContent = "ไม่สามารถอ่านไฟล์ได้";
+                    uploadError.classList.remove('hidden');
+                };
+                
+                reader.readAsDataURL(file); // Start reading the file
+            } catch (error) {
+                // Catch any initial errors (e.g., file not selected)
+                uploadSpinner.classList.add('hidden');
+                errorDetails.textContent = error.message;
+                uploadError.classList.remove('hidden');
+            }
+        });
+        
+        // Event listener for canceling file deletion
+        document.getElementById('cancelDeleteBtn').addEventListener('click', () => {
+            deleteModal.classList.add('hidden'); // Hide the delete confirmation modal
+            currentFileId = null; // Reset the current file ID
+        });
+        
+        // Event listener for confirming file deletion
+        document.getElementById('confirmDeleteBtn').addEventListener('click', async () => {
+            if (currentFileId) { // Ensure a file ID is set
+                try {
+                    // Send delete request to Google Apps Script
+                    const response = await fetch(SCRIPT_URL, {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            action: 'deleteFile',
+                            id: currentFileId // Send the ID of the file to be deleted
+                        })
+                    });
+                    
+                    const result = await response.json(); // Parse the response
+                    
+                    if (result.success) {
+                        // If deletion is successful, remove the file from local data
+                        for (const subject in fileData) {
+                            const index = fileData[subject].findIndex(file => file.id === currentFileId);
+                            if (index !== -1) {
+                                fileData[subject].splice(index, 1); // Remove the file from the array
+                                
+                                // Re-order the remaining files in the array
+                                fileData[subject].forEach((file, i) => {
+                                    file.order = i + 1;
+                                });
+                                break;
+                            }
+                        }
+                        
+                        updateFileTables(); // Refresh tables to reflect deletion
+                    } else {
+                        // Show an alert if deletion fails
+                        alert('เกิดข้อผิดพลาดในการลบไฟล์: ' + (result.error || 'ไม่ทราบสาเหตุ'));
+                    }
+                } catch (error) {
+                    // Catch and display network/other errors during deletion
+                    alert('เกิดข้อผิดพลาดในการลบไฟล์: ' + error.message);
+                }
+                
+                deleteModal.classList.add('hidden'); // Hide the modal
+                currentFileId = null; // Reset file ID
+            }
+        });
+        
+        // Function to toggle file visibility (teacher's view)
+        async function toggleFileVisibility(fileId, isVisible) {
+            try {
+                // Send request to Google Apps Script to update visibility
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        action: 'updateVisibility',
+                        id: fileId,
+                        visible: isVisible // New visibility status
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Update local data if successful
+                    for (const subject in fileData) {
+                        const file = fileData[subject].find(f => f.id === fileId);
+                        if (file) {
+                            file.visible = isVisible; // Update local visibility status
+                            break;
+                        }
+                    }
+                    updateStudentFileTables(); // Refresh student tables as visibility affects them
+                } else {
+                    alert('เกิดข้อผิดพลาดในการอัปเดตการแสดงผล: ' + (result.error || 'ไม่ทราบสาเหตุ'));
+                }
+            } catch (error) {
+                alert('เกิดข้อผิดพลาดในการอัปเดตการแสดงผล: ' + error.message);
+            }
+        }
+        
+        // Function to load files for the teacher dashboard
+        async function loadTeacherFiles() {
+            try {
+                // Display loading messages in all teacher tables
+                document.getElementById('fileTable1').innerHTML = '<tr><td colspan="5" class="py-4 px-4 text-center">กำลังโหลดข้อมูล...</td></tr>';
+                document.getElementById('fileTable2').innerHTML = '<tr><td colspan="5" class="py-4 px-4 text-center">กำลังโหลดข้อมูล...</td></tr>';
+                document.getElementById('fileTable3').innerHTML = '<tr><td colspan="5" class="py-4 px-4 text-center">กำลังโหลดข้อมูล...</td></tr>';
+                
+                // Fetch files from Google Apps Script, indicating it's for teacher view
+                const response = await fetch(`${SCRIPT_URL}?action=getFiles&isTeacher=true`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Reset fileData and populate with fetched files, categorized by subject
+                    fileData = {
+                        "วิชาวิทยาศาสตร์ชีวภาพ ม.4": [],
+                        "วิชาชีววิทยา ม.5": [],
+                        "วิชาชีววิทยา ม.6": []
+                    };
+                    
+                    result.files.forEach(file => {
+                        if (fileData[file.subject]) {
+                            fileData[file.subject].push(file);
+                        }
+                    });
+                    
+                    updateFileTables(); // Update teacher tables
+                } else {
+                    throw new Error(result.error || 'ไม่สามารถโหลดข้อมูลได้');
+                }
+            } catch (error) {
+                console.error('Error loading teacher files:', error);
+                
+                // Display error message in tables
+                const errorMessage = `<tr><td colspan="5" class="py-4 px-4 text-center text-red-500">เกิดข้อผิดพลาดในการโหลดข้อมูล: ${error.message}</td></tr>`;
+                document.getElementById('fileTable1').innerHTML = errorMessage;
+                document.getElementById('fileTable2').innerHTML = errorMessage;
+                document.getElementById('fileTable3').innerHTML = errorMessage;
+                
+                // Add sample data if loading fails, for demonstration purposes
+                addSampleData();
+            }
+        }
+        
+        // Function to load files for the student dashboard
+        async function loadStudentFiles() {
+            try {
+                // Display loading messages in all student tables
+                document.getElementById('studentFileTable1').innerHTML = '<tr><td colspan="3" class="py-4 px-4 text-center">กำลังโหลดข้อมูล...</td></tr>'; // Adjusted colspan
+                document.getElementById('studentFileTable2').innerHTML = '<tr><td colspan="3" class="py-4 px-4 text-center">กำลังโหลดข้อมูล...</td></tr>'; // Adjusted colspan
+                document.getElementById('studentFileTable3').innerHTML = '<tr><td colspan="3" class="py-4 px-4 text-center">กำลังโหลดข้อมูล...</td></tr>'; // Adjusted colspan
+                
+                // Fetch files from Google Apps Script, indicating it's for student view (only visible files)
+                const response = await fetch(`${SCRIPT_URL}?action=getFiles&isTeacher=false`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Only reset fileData if it's empty (i.e., not already loaded by teacher)
+                    if (Object.values(fileData).every(arr => arr.length === 0)) {
+                        fileData = {
+                            "วิชาวิทยาศาสตร์ชีวภาพ ม.4": [],
+                            "วิชาชีววิทยา ม.5": [],
+                            "วิชาชีววิทยา ม.6": []
+                        };
+                        
+                        result.files.forEach(file => {
+                            if (fileData[file.subject]) {
+                                fileData[file.subject].push(file);
+                            }
+                        });
+                    }
+                    updateStudentFileTables(); // Update student tables
+                } else {
+                    throw new Error(result.error || 'ไม่สามารถโหลดข้อมูลได้');
+                }
+            } catch (error) {
+                console.error('Error loading student files:', error);
+                
+                // Display error message in tables
+                const errorMessage = `<tr><td colspan="3" class="py-4 px-4 text-center text-red-500">เกิดข้อผิดพลาดในการโหลดข้อมูล: ${error.message}</td></tr>`; // Adjusted colspan
+                document.getElementById('studentFileTable1').innerHTML = errorMessage;
+                document.getElementById('studentFileTable2').innerHTML = errorMessage;
+                document.getElementById('studentFileTable3').innerHTML = errorMessage;
+                
+                // Add sample data if loading fails and no data is present
+                if (Object.values(fileData).every(arr => arr.length === 0)) {
+                    addSampleData();
+                }
+                updateStudentFileTables(); // Ensure student tables are updated even with sample data
+            }
+        }
+        
+        // Function to update the file tables in the teacher dashboard
+        function updateFileTables() {
+            const subjects = ["วิชาวิทยาศาสตร์ชีวภาพ ม.4", "วิชาชีววิทยา ม.5", "วิชาชีววิทยา ม.6"];
+            const tableIds = ["fileTable1", "fileTable2", "fileTable3"];
+            
+            subjects.forEach((subject, index) => {
+                const tableId = tableIds[index];
+                const tableBody = document.getElementById(tableId);
+                const files = fileData[subject]; // Get files for the current subject
+                
+                if (files.length === 0) {
+                    tableBody.innerHTML = `
+                        <tr>
+                            <td colspan="5" class="py-4 px-4 text-center">ไม่พบข้อมูล</td>
+                        </tr>
+                    `;
+                    return;
+                }
+                
+                let html = '';
+                // Generate table rows for each file
+                files.forEach(file => {
+                    html += `
+                        <tr class="file-row border-b">
+                            <td class="py-3 px-4">${file.order}</td>
+                            <td class="py-3 px-4">${file.fileName}</td>
+                            <td class="py-3 px-4">${file.uploadDate}</td>
+                            <td class="py-3 px-4">
+                                <div class="flex space-x-2">
+                                    <button class="move-up-btn text-blue-500 hover:text-blue-700" data-id="${file.id}" data-subject="${file.subject}">
+                                        🔼
+                                    </button>
+                                    <button class="move-down-btn text-blue-500 hover:text-blue-700" data-id="${file.id}" data-subject="${file.subject}">
+                                        🔽
+                                    </button>
+                                    <button class="delete-btn text-red-500 hover:text-red-700" data-id="${file.id}" data-name="${file.fileName}">
+                                        🗑️
+                                    </button>
+                                </div>
+                            </td>
+                            <td class="py-3 px-4 text-center">
+                                <div class="relative inline-block w-10 mr-2 align-middle select-none">
+                                    <input type="checkbox" id="toggle-${file.id}" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" 
+                                        ${file.visible ? 'checked' : ''} data-id="${file.id}">
+                                    <label for="toggle-${file.id}" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                });
+                
+                tableBody.innerHTML = html; // Insert generated HTML into the table body
+                
+                // Add event listeners for dynamically created buttons
+                const deleteButtons = tableBody.querySelectorAll('.delete-btn');
+                deleteButtons.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const fileId = btn.getAttribute('data-id');
+                        const fileName = btn.getAttribute('data-name');
+                        document.getElementById('deleteFileName').textContent = fileName;
+                        currentFileId = fileId;
+                        deleteModal.classList.remove('hidden'); // Show delete confirmation modal
+                    });
+                });
+                
+                const moveUpButtons = tableBody.querySelectorAll('.move-up-btn');
+                moveUpButtons.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const fileId = btn.getAttribute('data-id');
+                        const subject = btn.getAttribute('data-subject');
+                        moveFileUp(fileId, subject);
+                    });
+                });
+                
+                const moveDownButtons = tableBody.querySelectorAll('.move-down-btn');
+                moveDownButtons.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const fileId = btn.getAttribute('data-id');
+                        const subject = btn.getAttribute('data-subject');
+                        moveFileDown(fileId, subject);
+                    });
+                });
+                
+                const toggleCheckboxes = tableBody.querySelectorAll('.toggle-checkbox');
+                toggleCheckboxes.forEach(checkbox => {
+                    checkbox.addEventListener('change', () => {
+                        const fileId = checkbox.getAttribute('data-id');
+                        const isVisible = checkbox.checked;
+                        toggleFileVisibility(fileId, isVisible);
+                    });
+                });
+            });
+            
+            updateStudentFileTables(); // Also update student tables whenever teacher tables are updated
+        }
+        
+        // Function to update the file tables in the student dashboard
+        function updateStudentFileTables() {
+            const subjects = ["วิชาวิทยาศาสตร์ชีวภาพ ม.4", "วิชาชีววิทยา ม.5", "วิชาชีววิทยา ม.6"];
+            const tableIds = ["studentFileTable1", "studentFileTable2", "studentFileTable3"];
+            
+            subjects.forEach((subject, index) => {
+                const tableId = tableIds[index];
+                const tableBody = document.getElementById(tableId);
+                
+                // Filter only visible files for students
+                const files = fileData[subject].filter(file => file.visible !== false);
+                
+                if (files.length === 0) {
+                    tableBody.innerHTML = `
+                        <tr>
+                            <td colspan="3" class="py-4 px-4 text-center">ไม่พบข้อมูล</td> </tr>
+                    `;
+                    return;
+                }
+                
+                let html = '';
+                // Generate table rows for each visible file
+                files.forEach(file => {
+                    // Removed the thumbnail column as per user request
+                    html += `
+                        <tr class="file-row border-b">
+                            <td class="py-3 px-4">${file.order}</td>
+                            <td class="py-3 px-4">${file.fileName}</td>
+                            <td class="py-3 px-4">
+                                <a href="${file.downloadUrl || `https://drive.google.com/uc?export=download&id=${file.fileId}`}" 
+                                   target="_blank" class="download-btn text-blue-500 hover:text-blue-700 flex items-center">
+                                    <span class="mr-1">ดาวน์โหลด</span> 📥
+                                </a>
+                            </td>
+                        </tr>
+                    `;
+                });
+                
+                tableBody.innerHTML = html; // Insert generated HTML
+            });
+        }
+        
+        // Function to move a file up in order
+        async function moveFileUp(fileId, subject) {
+            const files = fileData[subject];
+            const index = files.findIndex(file => file.id === fileId);
+            
+            if (index > 0) { // Can only move up if not the first item
+                try {
+                    // Send order update request to Google Apps Script
+                    const response = await fetch(SCRIPT_URL, {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            action: 'updateOrder',
+                            id: fileId,
+                            direction: 'up',
+                            subject: subject
+                        })
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        // Swap the order values of the current file and the one above it
+                        const temp = files[index].order;
+                        files[index].order = files[index - 1].order;
+                        files[index - 1].order = temp;
+                        
+                        // Re-sort the array based on the new order
+                        files.sort((a, b) => a.order - b.order);
+                        
+                        updateFileTables(); // Refresh tables
+                    } else {
+                        alert('เกิดข้อผิดพลาดในการเลื่อนลำดับ: ' + (result.error || 'ไม่ทราบสาเหตุ'));
+                    }
+                } catch (error) {
+                    alert('เกิดข้อผิดพลาดในการเลื่อนลำดับ: ' + error.message);
+                }
+            }
+        }
+        
+        // Function to move a file down in order
+        async function moveFileDown(fileId, subject) {
+            const files = fileData[subject];
+            const index = files.findIndex(file => file.id === fileId);
+            
+            if (index < files.length - 1) { // Can only move down if not the last item
+                try {
+                    // Send order update request to Google Apps Script
+                    const response = await fetch(SCRIPT_URL, {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            action: 'updateOrder',
+                            id: fileId,
+                            direction: 'down',
+                            subject: subject
+                        })
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        // Swap the order values of the current file and the one below it
+                        const temp = files[index].order;
+                        files[index].order = files[index + 1].order;
+                        files[index + 1].order = temp;
+                        
+                        // Re-sort the array based on the new order
+                        files.sort((a, b) => a.order - b.order);
+                        
+                        updateFileTables(); // Refresh tables
+                    } else {
+                        alert('เกิดข้อผิดพลาดในการเลื่อนลำดับ: ' + (result.error || 'ไม่ทราบสาเหตุ'));
+                    }
+                } catch (error) {
+                    alert('เกิดข้อผิดพลาดในการเลื่อนลำดับ: ' + error.message);
+                }
+            }
+        }
+        
+        // Function to add some sample data for demonstration purposes if live data loading fails
+        function addSampleData() {
+            fileData["วิชาวิทยาศาสตร์ชีวภาพ ม.4"] = [
+                {
+                    id: 'file_1',
+                    fileName: 'บทที่ 1 เซลล์ของสิ่งมีชีวิต',
+                    subject: 'วิชาวิทยาศาสตร์ชีวภาพ ม.4',
+                    uploadDate: '1/5/2023, 10:30:45',
+                    fileId: 'sample_file_id_1',
+                    downloadUrl: 'https://drive.google.com/uc?export=download&id=sample_file_id_1',
+                    order: 1,
+                    visible: true
+                },
+                {
+                    id: 'file_2',
+                    fileName: 'บทที่ 2 การลำเลียงสารเข้าและออกจากเซลล์',
+                    subject: 'วิชาวิทยาศาสตร์ชีวภาพ ม.4',
+                    uploadDate: '15/5/2023, 14:20:10',
+                    fileId: 'sample_file_id_2',
+                    downloadUrl: 'https://drive.google.com/uc?export=download&id=sample_file_id_2',
+                    order: 2,
+                    visible: true
+                }
+            ];
+            
+            fileData["วิชาชีววิทยา ม.5"] = [
+                {
+                    id: 'file_3',
+                    fileName: 'บทที่ 1 การถ่ายทอดลักษณะทางพันธุกรรม',
+                    subject: 'วิชาชีววิทยา ม.5',
+                    uploadDate: '5/6/2023, 09:15:30',
+                    fileId: 'sample_file_id_3',
+                    downloadUrl: 'https://drive.google.com/uc?export=download&id=sample_file_id_3',
+                    order: 1,
+                    visible: true
+                }
+            ];
+            
+            fileData["วิชาชีววิทยา ม.6"] = [
+                {
+                    id: 'file_4',
+                    fileName: 'บทที่ 1 ความหลากหลายทางชีวภาพ',
+                    subject: 'วิชาชีววิทยา ม.6',
+                    uploadDate: '10/7/2023, 11:45:20',
+                    fileId: 'sample_file_id_4',
+                    downloadUrl: 'https://drive.google.com/uc?export=download&id=sample_file_id_4',
+                    order: 1,
+                    visible: true
+                },
+                {
+                    id: 'file_5',
+                    fileName: 'บทที่ 2 ระบบนิเวศ',
+                    subject: 'วิชาชีววิทยา ม.6',
+                    uploadDate: '25/7/2023, 13:10:05',
+                    fileId: 'sample_file_id_5',
+                    downloadUrl: 'https://drive.google.com/uc?export=download&id=sample_file_id_5',
+                    order: 2,
+                    visible: false
+                }
+            ];
+        }
+    </script>
+</body>
+</html>
